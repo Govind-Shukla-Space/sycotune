@@ -1,11 +1,12 @@
 import { useState,useRef } from 'react';
 import './App.css';
-
+import vidArray from './Components/vidArray.js';
+import musicAPI from './Components/musicAPI.js';
+import { colours } from 'nodemon/lib/config/defaults.js';
 function App() {
   const [currentMusicDetails,setCurrentMusicDetails]=useState({
-    songName:'Chasing',
-    songArtist:'NEFFLEX',
-    songSrc:'./Assets/songs/Chasing - NEFFEX.mp3',
+    songName:'Raat Kali Ek Khwab Me Aayi',
+    songSrc:'./Assets/songs/Raat Kali Ek Khwab Me Aayi.mp3',
     songAvatar:'./Assets/Images/image1.jpg'
   })
   const[audioProgress,setAudioProgress]=useState(0);
@@ -39,27 +40,8 @@ function App() {
       setIsAudioPlaying(false);
     }
   }
-  const musicAPI=[
-    {
-      songName:'Chasing',
-      songArtist:'NEFFLEX',
-      songSrc:'./Assets/songs/Chasing - NEFFEX.mp3',
-      songAvatar:'./Assets/Images/image1.jpg'
-    },
-    {
-      songName:'Catch Me If I Fall',
-      songArtist:'TEGNENT',
-      songSrc:'./Assets/songs/Catch Me If I Fall - NEFFEX.mp3',
-      songAvatar:'./Assets/Images/image2.jpg'
-    },
-    {
-      songName:'Inspired (Clean)',
-      songArtist:'NEFFLEX',
-      songSrc:'./Assets/songs/Inspired (Clean) - NEFFEX.mp3',
-      songAvatar:'./Assets/Images/image3.jpg'
-    } 
-  ]
-  const handleNextSong=()=>{ 
+  
+  const handleNextSong=()=>{
     if(musicIndex>=musicAPI.length-1){
       let setNumber=0;
       setMusicIndex(setNumber);
@@ -89,7 +71,6 @@ function App() {
     currentAudio.current.play();
     setCurrentMusicDetails({
       songName:musicObject.songName,
-      songArtist:musicObject.songArtist,
       songSrc:musicObject.songSrc,
       songAvatar:musicObject.songAvatar
     })
@@ -111,8 +92,7 @@ function App() {
     const progress=parseInt((currentAudio.current.currentTime/currentAudio.current.duration)*100);
     setAudioProgress(isNaN(progress)?0:progress);
   }
-  const vidArray=['./Assets/Videos/video1.mp4','./Assets/Videos/video2.mp4','./Assets/Videos/video3.mp4','./Assets/Videos/video4.mp4',
-  './Assets/Videos/video5.mp4'];
+  
   const handleChangeBackground=()=>{
     if(videoIndex>=vidArray.length-1){
       setVideoIndex(0);
@@ -124,15 +104,15 @@ function App() {
   return (
     <>
       <div className='container'>
-        <audio src='./Assets/songs/Chasing - NEFFEX.mp3' ref={currentAudio} onEnded={handleNextSong} 
+        <audio src='./Assets/songs/Raat Kali Ek Khwab Me Aayi.mp3' ref={currentAudio} onEnded={handleNextSong} 
         onTimeUpdate={handleAudioUpdate}></audio>
         <video src={vidArray[videoIndex]} loop muted autoPlay className='backgroundVideo'></video>
         <div className='blackScreen'></div>
         <div className='music-Container'>
           <p className='musicPlayer'>Rhythm</p>
-          <p className='music-Head-Name'>{currentMusicDetails.songName}</p>
-          <p className='music-Artist-Name'>{currentMusicDetails.songArtist}</p>
-          <img src={currentMusicDetails.songAvatar} className={avatarClass[avatarClassIndex]} 
+          <i><p className='music-Head-Name'>{currentMusicDetails.songName}</p></i>
+          {/* <p className='music-Artist-Name'>{currentMusicDetails.songArtist}</p> */}
+          <img src='./Assets/Images/image1.jpg' className={avatarClass[avatarClassIndex]} 
           onClick={handleAvatar} alt='song Avatar' id='songAvatar'/>
           <div className='musicTimerDiv'>
             <p className='musicCurrentTime'>{musicCurrentTime}</p>
@@ -147,7 +127,7 @@ function App() {
           </div>
         </div> 
         <div className='changeBackBtn' onClick={handleChangeBackground}>
-          Changebackground
+          <i>Change Background</i>
         </div>
       </div>
     </>
